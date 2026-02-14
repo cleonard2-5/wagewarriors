@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card text-center shadow-sm">
+        <div class="card-body">
+            <h2 class="text-success">Application Submitted!</h2>
+            <hr>
+            <p class="lead">{{ message }}</p>
+            <p>The recruitment team at <strong>{{ job.company }}</strong> will review your profile shortly.</p>
+            <a href="{% url 'jobs.index' %}" class="btn btn-secondary">Back to Job Listings</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

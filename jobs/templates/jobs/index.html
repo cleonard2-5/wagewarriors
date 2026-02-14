@@ -29,31 +29,41 @@
             <div class="col mx-auto mb-3">
                 <h2>Jobs Page</h2>
                 <hr>
+                {% for j in template_data.jobs %}
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="card w-75 mb-3">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-8 border-end">
-                                    <h3 class="card-title" style="font-size: 24px;">Software Engineer for ChatGPT</h3>
-                                    <h6 class="card-subtitle text-muted fw-normal mb-1" style="text-decoration: none">Job Location | Remote | Visa-Sponsored | $67.67 - $420.69</h6>
+                                    <h3 class="card-title" style="font-size: 24px;">{{ j.title }}</h3>
+                                    <h6 class="card-subtitle text-muted fw-normal mb-1" style="text-decoration: none">
+                                        {{ j.location }} | 
+                                        {% if j.isRemote %}Remote{% else %}On-site{% endif %} | 
+                                        {% if j.hasVisaSponsorship %}Visa-Sponsored{% endif %} | 
+                                        ${{ j.salaryLower }} - ${{ j.salaryUpper }}
+                                    </h6>
                                     <p class="card-text fw-bold mb-1">Job Description</p>
-                                    <p class="card-text">yo gang come end the earth twin</p>
+                                    <p class="card-text">{{ j.description }}</p>
                                     <p class="card-text fw-bold">Job Skills</p>
-                                    <ul>
-                                        <li>Item A</li>
-                                        <li>Item B</li>
-                                        <li>Item C</li>
-                                    </ul>
-                                    <a class="btn btn-primary">Apply</a>
+                                    <p class="card-text">{{ j.skills }}</p>
+
+                                    {% if user.is_authenticated and user.is_job_seeker %}
+                                    <a class="btn btn-primary" href="{% url 'jobs.apply' j.id %}" role="button">Apply</a>
+                                    {% endif %}
                                 </div>
                                 <div class="col-4 text-left">
                                     <img src="{% static 'img/company-chatgpt.png' %}" class="rounded" width="25" height="25" alt="company icon">
-                                    OpenAI LLC
+                                    {{ j.company }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <div class="text-center">
+                    <p>No jobs available. Try changing your filters!</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
