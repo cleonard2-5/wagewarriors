@@ -24,27 +24,38 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto navbar-ml">
-            <a class="nav-link" href="#">Applications</a>
-            <a class="nav-link" href="{% url 'jobs.index' %}">Job Search</a>
-            <div class="vr bg-white mx-2 d-none d-lg-block"></div>
             {% comment %} Job seeker links {% endcomment %}
-            {{% if user.is_authenticated and user.is_job_seeker %}
+            {% if user.is_authenticated and user.is_job_seeker %}
+            <a class="nav-link" href="{% url 'jobs.index' %}">Job Search</a>
+            <a class="nav-link" href="#">Applications</a>
+            <div class="vr bg-white mx-2 d-none d-lg-block"></div>
             <a class="nav-link" href="{% url 'chat.index' %}">Messages</a>
             <a class="nav-link" href="{% url 'account.logout' %}">Logout</a>
-            <a class="nav-link" href="{% url 'account.profile' %}">{{ user.username }}</a>
+            <a class="nav-link" href="{% url 'account.profile' user.username %}">{{ user.username }}</a>
+
             {% comment %} Recruiter links {% endcomment %}
             {% elif user.is_authenticated and user.is_recruiter %}
+            <a class="nav-link" href="{% url 'jobs.index' %}">Job Search</a>
+            <a class="nav-link" href="#">Applicants</a>
+            <div class="vr bg-white mx-2 d-none d-lg-block"></div>
             <a class="nav-link" href="{% url 'chat.index' %}">Messages</a>
             <a class="nav-link" href="{% url 'account.logout' %}">Logout</a>
-            <a class="nav-link" href="{% url 'account.profile' %}">{{ user.username }}</a>
+            <a class="nav-link" href="{% url 'account.profile' user.username %}">{{ user.username }}</a>
             {% elif user.is_authenticated %}
-            <a class="nav-link" href="{% url 'chat.index' %}">Messages</a>
+
+            {% comment %} Admin can logout, and look at jobs {% endcomment %}
+            <a class="nav-link" href="{% url 'jobs.index' %}">Job Search</a>
+            <div class="vr bg-white mx-2 d-none d-lg-block"></div>
             <a class="nav-link" href="{% url 'account.logout' %}">Logout</a>
             <a class="nav-link pe-none" href="#" aria-disabled="true">{{ user.username }}</a>
             {% else %}
+
+            {% comment %} Not logged in user {% endcomment %}
+            <a class="nav-link" href="{% url 'jobs.index' %}">Job Search</a>
+            <div class="vr bg-white mx-2 d-none d-lg-block"></div>
             <a class="nav-link" href="{% url 'account.login' %}">Login</a>
             <a class="nav-link" href="{% url 'account.index' %}">Sign Up</a>
-            {% endif %}}
+            {% endif %}
           </div>
         </div>
       </div>

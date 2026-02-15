@@ -29,9 +29,10 @@ go back to your Github fork and click contribute --> pull request
 # Tasks
 - valid pasword and email check. <br/>
 - unique username, but allow duplicate companies. <br/>
-- add a edit button to profile to allow users to change information. <br/>
+- <s>add a edit button to profile to allow users to change information. </s><br/>
 - send proper errors when signup/login fails. <br/>
-- profile has username in the url.  <br/>
+- <s>profile has username in the url.  </s><br/>
+- Add custom colors to allow for a purple overall theme. <br/>
 
 to access a user's field it is along the lines of ~user.job_seeker_profile.headline, but for any acccesible field (except password, username, and email which were adapted from the user model)
 <hr>

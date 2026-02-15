@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login # Alias to avoid name conflict
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import SeekerSignupForm, RecruiterSignupForm
-from .models import jobSeeker, recruiter
+from .models import jobSeeker, recruiter, User
 from django.contrib.auth import logout
 
 # Create your views here.
@@ -23,9 +23,9 @@ def login_view(request):
             auth_login(request, user)
 
             if user.is_job_seeker:
-                return redirect('account.profile')
+                return redirect('account.profile', username=user.username)
             elif user.is_recruiter:
-                return redirect('account.profile')
+                return redirect('account.profile', username=user.username)
             else:
                 return redirect('home.index')
         else:
@@ -39,10 +39,11 @@ def login_view(request):
 
 # Loads user's profile
 @login_required
-def profile(request):
+def profile(request, username):
     template_data = {}
     template_data['title'] = 'Profile'
-    return render(request, 'account/profile.html', {'template_data': template_data, 'user': request.user})
+    user = get_object_or_404(User, username=username)
+    return render(request, 'account/profile.html', {'template_data': template_data, 'user': user})
 
 #logout view
 @login_required

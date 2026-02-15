@@ -27,8 +27,14 @@
     <div class="conatiner">
         <div class="row mt-3">
             <div class="col mx-auto mb-3">
-                <h2>Jobs Page</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Jobs Page</h2>
+                    {% if user.is_authenticated and user.is_recruiter %}
+                    <a class='btn btn-info'>Post a Job</a>
+                    {% endif %}
+                </div>
                 <hr>
+            
                 {% for j in template_data.jobs %}
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="card w-75 mb-3">
