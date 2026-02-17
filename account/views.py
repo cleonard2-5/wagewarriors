@@ -133,3 +133,17 @@ def recruiter_signup(request):
     else:
         form = RecruiterSignupForm()
     return render(request, 'account/recruiter_signup.html', {'form': form})
+
+def applications(request, username):
+    user = get_object_or_404(User, username=username)
+    if not user.is_job_seeker:
+        return redirect('account.profile', username=username)
+
+    job_seeker_profile = get_object_or_404(jobSeeker, user=user)
+    applications = jobSeeker.objects.filter(user=user).first().jobsappliedto_set.select_related('jobIDFK')
+
+    template_data = {
+        'title': 'My Applications',
+        'applications': applications,
+    }
+    return render(request, 'account/applications.html', {'template_data': template_data, 'user': user})

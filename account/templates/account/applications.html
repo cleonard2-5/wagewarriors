@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_job_seeker %}
+        <section class="jobs-applied">
+            <h2>Jobs Applied To</h2>
+            {% if user.job_seeker_profile.jobsappliedto_set.all %}
+                <ul>
+                    {% for application in user.job_seeker_profile.jobsappliedto_set.all %}
+                    <!-- ADD a function that sorts the applications by furthest in interview stage, ordering top to bottom in that order-->
+                        <li>
+                            <strong>{{ application.jobIDFK.title }}</strong> at {{ application.jobIDFK.company }}
+                            <br>
+                            <small>Status: {{ application.status|default:"Pending" }}</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No job applications yet.</p>
+            {% endif %}
+        </section>
+    {% endif %}
+{% endblock content %}
