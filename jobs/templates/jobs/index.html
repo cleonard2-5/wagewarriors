@@ -14,7 +14,7 @@
                         {% endif %}
                     </h2>
                     {% if user.is_authenticated and user.is_recruiter %}
-                        <a class='btn btn-info'>Create Posting</a>
+                        <a href="{% url 'jobs.create' %}" class="btn btn-info">Create Posting</a>
                     {% endif %}
                 </div>
                 <hr>
@@ -43,7 +43,7 @@
                                                     {% endfor %}
                                                 </ul>
 
-                                                <a class='btn btn-info'>Edit</a>
+                                                <a href="{% url 'jobs.edit' j.id %}" class="btn btn-info">Edit</a>
                                             </div>
                                             <div class="col-4 text-left">
                                                 <img src="{% static 'img/company-chatgpt.png' %}" class="rounded" width="25" height="25" alt="company icon">
@@ -61,7 +61,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-8 border-end">
-                                            <h3 class="card-title" style="font-size: 24px;">J: {{ j.title }}</h3>
+                                            <h3 class="card-title" style="font-size: 24px;">{{ j.title }}</h3>
                                             <h6 class="card-subtitle text-muted fw-normal mb-1" style="text-decoration: none">
                                                 {{ j.location }} | 
                                                 {% if j.isRemote %}Remote{% else %}On-site{% endif %} | 
@@ -105,91 +105,6 @@
             </div>
         </div>
         <hr>
-            
-        {% for j in template_data.jobs %}
-          {% if user.is_recruiter %}
-            {% if j.company == user.recruiter_profile.company_name %}
-              <div class="d-flex align-items-center justify-content-center">
-                <div class="card w-75 mb-3">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-8 border-end">
-                        <h3 class="card-title" style="font-size: 24px;">{{ j.title }}</h3>
-                          <h6 class="card-subtitle text-muted fw-normal mb-3" style="text-decoration: none">
-                            {{ j.location }} | 
-                            {% if j.isRemote %}Remote{% else %}On-site{% endif %} | 
-                            {% if j.hasVisaSponsorship %}Visa-Sponsored{% else %}Not Visa-Sponsored{% endif %} | 
-                            ${{ j.salaryLower }} - ${{ j.salaryUpper }}
-                          </h6>
-                          <p class="card-text fw-bold mb-1">Job Description</p>
-                          <p class="card-text">{{ j.description }}</p>
-                          <p class="card-text fw-bold">Job Skills</p>
-                          <ul class="list-group mb-2">
-                            {% for skill in j.skills %}
-                              <li class="list-group-item">{{ skill }}</li>
-                            {% endfor %}
-                          </ul>
-                          <a class='btn btn-info' href="{% url 'jobs.edit' j.id %}">Edit Posting</a>
-                        </div>
-                        <div class="col-4 text-left">
-                          <img src="{% static 'img/company-chatgpt.png' %}" class="rounded" width="25" height="25" alt="company icon">
-                            {{ j.company }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            {% endif %}
-
-          {% else %}
-            <div class="d-flex align-items-center justify-content-center">
-              <div class="card w-75 mb-3">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-8 border-end">
-                      <h3 class="card-title" style="font-size: 24px;">{{ j.title }}</h3>
-                        <h6 class="card-subtitle text-muted fw-normal mb-1" style="text-decoration: none">
-                          {{ j.location }} | 
-                          {% if j.isRemote %}Remote{% else %}On-site{% endif %} | 
-                          {% if j.hasVisaSponsorship %}Visa-Sponsored{% endif %} | 
-                          ${{ j.salaryLower }} - ${{ j.salaryUpper }}
-                        </h6>
-                        <p class="card-text fw-bold mb-1">Job Description</p>
-                        <p class="card-text">{{ j.description }}</p>
-                        <p class="card-text fw-bold">Job Skills</p>
-                        <ul class="list-group">
-                          {% for skill in j.skills %}
-                          <li class="list-group-item">{{ skill }}</li>
-                          {% endfor %}
-                        </ul>
-
-                        {% if user.is_authenticated and user.is_job_seeker %}
-                          <a class="btn btn-primary" href="{% url 'jobs.apply' j.id %}" role="button">Apply</a>
-                        {% endif %}
-                      </div>
-                      <div class="col-4 text-left">
-                        <img src="{% static 'img/company-chatgpt.png' %}" class="rounded" width="25" height="25" alt="company icon">
-                          {{ j.company }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {% endif %}
-                
-         {% empty %}
-          <div class="text-center">
-            <p>
-            {% if user.is_authenticated and user.is_recruiter %}
-                You haven't posted any jobs yet.
-            {% else %}
-                Nob jobs available. Try again later or change your filters!
-            {% endif %}
-            </p>
-          </div>
-        {% endfor %}
-      </div>
     </div>
-  </div>
 </div>
 {% endblock content %}
