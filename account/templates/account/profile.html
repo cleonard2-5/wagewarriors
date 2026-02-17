@@ -73,6 +73,24 @@
                 <div class="col-md-12 mb-4">
                     <div class="card shadow-sm border-0 h-100">
                         <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+                            <h5 class="card-title fw-bold text-primary">Privacy Options</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if user.job_seeker_profile.isPrivate %}
+                                <p class="mb-0">Your profile is currently <strong>Private</strong>.</p>
+                            {% else %}
+                                <p class="mb-0">Your profile is currently <strong>Public</strong>.</p>
+                             {% endif %}
+                    
+                            <p class="mb-0">Recruiters can only see your Name and Username.</p>
+                            <small class="text-muted fst-italic">You can change this in the edit profile section.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-4">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
                             <h5 class="card-title fw-bold text-primary">Skills</h5>
                         </div>
                         <div class="card-body">

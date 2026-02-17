@@ -4,16 +4,44 @@
         <section class="jobs-applied">
             <h2>Jobs Applied To</h2>
             {% if user.job_seeker_profile.jobsappliedto_set.all %}
-                <ul>
-                    {% for application in user.job_seeker_profile.jobsappliedto_set.all %}
+                <div class="row">
                     <!-- ADD a function that sorts the applications by furthest in interview stage, ordering top to bottom in that order-->
-                        <li>
-                            <strong>{{ application.jobIDFK.title }}</strong> at {{ application.jobIDFK.company }}
-                            <br>
-                            <small>Status: {{ application.status|default:"Pending" }}</small>
-                        </li>
+                     <!-- also a progress bar that tracks based on where you are -->
+                    {% for application in user.job_seeker_profile.jobsappliedto_set.all %}
+                    <div class="col-md-12 mb-4">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body">
+                                <p class="card-title fw-bold text-primary">{{ application.jobIDFK.title }}</strong> at {{ application.jobIDFK.company }}</p>
+                                <small class="text-muted fst-italic">Status: {{ application.status|default:"Pending" }}</small>
+                            </div>
+                        </div>
+
+                         <!-- Progress Arrow Bar -->
+                        <!-- <div style="border-radius:5px; border:1px solid #ccc; background-color:#fff; height:35px; padding-left:10px;">
+                            <div style="float:left; display:inline-block; line-height:35px; padding-left:5px; font-family:Arial;">
+                                Applied
+                            </div>
+                            <div style="float:left; position:relative; transform:rotate(-45deg) skew(-15deg, -15deg); display:inline-block; box-shadow:1px 1px 3px 0px rgba(0,0,0,0.15); border-bottom:1px solid #ccc; border-right:1px solid #ccc; width:19px; height:19px; top:8px; left:-8px;"></div>
+                            <div style="float:left; display:inline-block; line-height:35px; padding-left:5px; font-family:Arial;">
+                                Review
+                            </div>
+                            <div style="float:left; position:relative; transform:rotate(-45deg) skew(-15deg, -15deg); display:inline-block; box-shadow:1px 1px 3px 0px rgba(0,0,0,0.15); border-bottom:1px solid #ccc; border-right:1px solid #ccc; width:19px; height:19px; top:8px; left:-8px;"></div>
+                            <div style="float:left; display:inline-block; line-height:35px; padding-left:5px; font-family:Arial;">
+                                Interview
+                            </div>
+                            <div style="float:left; position:relative; transform:rotate(-45deg) skew(-15deg, -15deg); display:inline-block; box-shadow:1px 1px 3px 0px rgba(0,0,0,0.15); border-bottom:1px solid #ccc; border-right:1px solid #ccc; width:19px; height:19px; top:8px; left:-8px;"></div>
+                            <div style="float:left; display:inline-block; line-height:35px; padding-left:5px; font-family:Arial;">
+                                Offer
+                            </div>
+                            <div style="float:left; position:relative; transform:rotate(-45deg) skew(-15deg, -15deg); display:inline-block; box-shadow:1px 1px 3px 0px rgba(0,0,0,0.15); border-bottom:1px solid #ccc; border-right:1px solid #ccc; width:19px; height:19px; top:8px; left:-8px;"></div>
+                            <div style="float:left; display:inline-block; line-height:35px; padding-left:5px; font-family:Arial;">
+                                Closed
+                            </div>
+                        </div> -->
+
+                    </div>
                     {% endfor %}
-                </ul>
+                </div>  
             {% else %}
                 <p>No job applications yet.</p>
             {% endif %}
