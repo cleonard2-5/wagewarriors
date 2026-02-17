@@ -36,7 +36,7 @@
             {% comment %} Recruiter links {% endcomment %}
             {% elif user.is_authenticated and user.is_recruiter %}
             <a class="nav-link" href="{% url 'jobs.index' %}">Your Jobs</a>
-            <a class="nav-link" href="#">Applicants</a>
+            <a class="nav-link" href="{% url 'applicants.index' %}">Applicants</a>
             <div class="vr bg-white mx-2 d-none d-lg-block"></div>
             <a class="nav-link" href="{% url 'chat.index' %}">Messages</a>
             <a class="nav-link" href="{% url 'account.logout' %}">Logout</a>

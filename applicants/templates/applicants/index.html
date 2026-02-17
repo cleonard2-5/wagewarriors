@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="p-3">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col mx-auto mb-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>
+            Candidate Search
+          </h2>
+        </div>
+        <hr>
+
+        {% if  user.is_recruiter %}
+          <div class="card p-3 mb-4 bg-light">
+            <form method="GET" action="{% url 'applicants.index' %}" class="row g-3">
+
+              <div class="col-md-3">
+                <input type="text" name="location" class="form-control" placeholder="Location" value="{{ request.GET.location }}">
+              </div>
+
+              <div class="col-md-3">
+                <input type="text" name="skill" class="form-control" placeholder="Skill (e.g. Python)" value="{{ request.GET.skill }}">
+              </div>
+
+              <div class="col-md-3">
+                <input type="text" name="projects" class="form-control" placeholder="Projects" value="{{ request.GET.projects }}">
+              </div>
+                        
+              <div class="col-md-12 d-flex align-items-center">
+                <button type="submit" class="btn btn-primary ms-auto">Search Candidates</button>
+                <a href="{% url 'applicants.index' %}" class="btn btn-link">Reset</a>
+              </div>
+            </form>
+          </div>
+        {% endif %}
+
+        {% for seeker in template_data.applicants %}
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="card w-75 mb-2">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-8 border-end">
+                  <h3 class="card-title" style="font-size: 24px;">{{ seeker.headline }}</h3>
+                    <h6 class="card-text mb-2 fw-bold">Based in {{ seeker.currentLocation }}</h6>
+
+                    <p class="card-text fw-bold mb-1">Work Experience</p>
+                    <p class="card-text mb-1">{{ seeker.work_experience }}</p>
+
+                    <p class="card-text fw-bold mb-1">Skills</p>
+                    <p class="card-text mb-1">{{ seeker.skills }}</p>
+
+                    <p class="card-text fw-bold mb-1">Education</p>
+                    <p class="card-text mb-1">{{ seeker.education }}</p>
+
+                    <p class="card-text fw-bold mb-1">Additional Links</p>
+                    <p class="card-text mb-1">{{ seeker.additional_links }}</p>
+                </div>
+
+                <div class="col-4 text-left">
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" 
+                      style="width: 25px; height: 25px; font-size: 75%; flex-shrink: 0;">
+                      {{ seeker.user.first_name|first|upper }}{{ seeker.user.last_name|first|upper }}
+                    </div>
+                          
+                    <span class="card-text fw-bold">
+                      {{ seeker.user.first_name }} {{ seeker.user.last_name }}
+                    </span>
+                          
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+          <div class="alert alert-info text-center mt-3">
+            No applicants found matching your criteria.
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
